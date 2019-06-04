@@ -12,23 +12,26 @@ services:
 
   elasticsearch:
     container_name: v-elastic
-    image: elasticsearch:6.6.0
+    image: elasticsearch:6.7.1
     restart: always
     ports:
     - 9201:9200
     
   mysql:
-   container_name: v-mysql
-   image: mysql/mysql-server:5.7
-   environment:
-    MYSQL_DATABASE: test
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_ROOT_HOST: '%'
-   ports:
-   - "3307:3306"
-   restart: always
+    container_name: v-mysql
+    image: mysql/mysql-server:5.7
+    environment:
+    # MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql/init.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3307:3306"
+    restart: always
     
   app:
+    container_name: v-app
     restart: always
     build: ./app
     working_dir: /app
