@@ -13,9 +13,13 @@ services:
   elasticsearch:
     container_name: v-elastic
     image: elasticsearch:6.7.1
+    environment:
+      transport.host: 0.0.0.0
+      discovery.zen.minimum_master_nodes: 1
     restart: always
     ports:
     - 9201:9200
+    - 9301:9300
     
   mysql:
     container_name: v-mysql
